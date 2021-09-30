@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+  <title>Document</title>
+
+  <style>
+    .block {
+      opacity: 0;
+      height: 500px;
+      transition: 3s opacity linear;
+    }
+
+    .block.visible {
+      opacity: 1;
+      transition: 3s opacity linear;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>This page will animate a lot!</h1>
+  <div id="block-one" class="block" style="background-color: lightblue;"></div>
+  <div id="block-two" class="block" style="background-color: lightgreen;"></div>
+  <div id="block-three" class="block" style="background-color: lightsalmon;"></div>
+  <div id="block-four" class="block" style="background-color: lightslategray;"></div>
+
+  <script>
+    const controller = new ScrollMagic.Controller();
+
+    // index: 0, 1, 2, 3...
+    const list = ['#block-one', '#block-two', '#block-three', '#block-four'] // length is 4
+
+    // 1st -> initial value
+    // 2nd -> while condition
+    // 3rd -> increment
+    for (let el = 0; el < list.length; el++) {
+      // This part will be executed as many times as elements of my list
+      const scene = new ScrollMagic.Scene({
+        triggerElement: list[el],
+        triggerHook: 0.9, // show, when scrolled 10% into view
+        duration: "80%", // hide 10% before exiting view (80% + 10% from bottom)
+        offset: 50 // move trigger to center of element
+      })
+
+      scene
+        .setClassToggle(list[el], "visible") // add class to reveal
+        .addIndicators() // add indicators (requires plugin)
+        .addTo(controller);
+    }
+  </script>
+</body>
+
+</html>
